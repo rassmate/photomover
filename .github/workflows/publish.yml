@@ -15,12 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v3
-        with:
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} 
-          passphrase: ${{ secrets.PASSPHRASE }} 
       - name: Set up Java for publishing to Maven Central Repository
         uses: actions/setup-java@v1
         with:
@@ -28,6 +22,8 @@ jobs:
           server-id: ossrh
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_TOKEN }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.PASSPHRASE }}
       - name: echo
         run: echo 'mvn versions:set -DnewVersion=${GITHUB_REF##*/}'  
       - name: Publish to the Maven Central Repository
