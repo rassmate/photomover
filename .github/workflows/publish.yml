@@ -17,7 +17,7 @@ jobs:
           server-id: ossrh
           server-username: USER_NAME
           server-password: PASSWORD
-          gpg-private-key: GPG_KEY
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASS
       - name: set version
         run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
@@ -26,5 +26,4 @@ jobs:
         env: 
           USER_NAME: ${{ secrets.OSSRH_USERNAME }}
           PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          GPG_KEY:  ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASS:  ${{ secrets.PASSPHRASE }}
