@@ -1,14 +1,9 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on: 
   release:
     types: [created]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -20,11 +15,11 @@ jobs:
         with:
           java-version: 1.8
           server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
+          server-username: 0idY5C00
           server-password: ${{ secrets.OSSRH_TOKEN }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.PASSPHRASE }}
-      - name: echo
-        run: echo 'mvn versions:set -DnewVersion=${GITHUB_REF##*/}'  
+      - name: set version
+        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
       - name: Publish to the Maven Central Repository
-        run: echo 'mvn clean deploy -Prelease'
+        run: mvn clean deploy -Prelease
